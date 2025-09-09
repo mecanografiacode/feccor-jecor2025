@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FECCOR/JECOR 2025 - Colégio Reação</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0a1128;
+      --secondary: #2a5c8d;
+      --accent: #e63946;
+      --accent-light: #ff6b7a;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #28a745;
+      --tech-blue: #1a2a6c;
+      --tech-red: #d90429;
+      --tech-gradient: linear-gradient(135deg, var(--tech-blue), var(--tech-red));
+      --blue-gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --red-gradient: linear-gradient(135deg, var(--accent), var(--accent-light));
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      background-color: #0a1128;
+      color: #f1faee;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(26, 42, 108, 0.4) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(217, 4, 41, 0.3) 0%, transparent 20%);
+    }
+
+    /* Tela de introdução com a logo */
+    .intro-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: var(--tech-gradient);
+      z-index: 2000;
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s ease;
+    }
+
+    .intro-screen.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro-logo {
+      max-width: 220px;
+      animation: pulse 2s infinite, float 3s ease-in-out infinite;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+      margin-bottom: 40px;
+    }
+
+    .typing-container {
+      text-align: center;
+      min-height: 100px;
+    }
+
+    .typing-text {
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      border-right: 3px solid white;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: 1px;
+      animation: blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: white; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* Efeito de partículas para aspecto tecnológico */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      animation: particleFloat linear infinite;
+    }
+
+    @keyframes particleFloat {
+      to {
+        transform: translateY(-100vh);
+      }
+    }
+
+    /* Hexagon pattern background */
+    .hexagon-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(120deg, rgba(26, 42, 108, 0.1) 0%, transparent 50%),
+        repeating-radial-gradient(circle at 20% 30%, transparent 0, rgba(217, 4, 41, 0.1) 2px, transparent 4px);
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    header {
+      text-align: center;
+      padding: 100px 20px 70px;
+      background: var(--tech-gradient);
+      color: white;
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    }
+
+    .tech-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 30px 30px;
+      z-index: 0;
+      transform: perspective(500px) rotateX(60deg) translateY(-50px);
+    }
+
+    .circuit-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .circuit-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      height: 2px;
+      animation: circuitFlow 8s linear infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes circuitFlow {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    header .content {
+      position: relative;
+      z-index: 2;
+    }
+
+    header img {
+      max-width: 200px;
+      margin-bottom: 25px;
+      transition: all 0.5s ease;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+    }
+
+    header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 25px;
+      animation: fadeIn 2s ease;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+      animation: fadeIn 3s ease;
+      font-size: 1.1rem;
+    }
+
+    section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 50px;
+      font-size: 2.5rem;
+      color: white;
+      position: relative;
+      font-weight: 700;
+    }
+
+    h2:after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: var(--red-gradient);
+      margin: 20px auto;
+      border-radius: 2px;
+    }
+
+    h3 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--accent);
+      margin: 40px 0 20px;
+      font-size: 1.8rem;
+      padding-left: 15px;
+      border-left: 4px solid var(--accent);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: rgba(42, 92, 141, 0.2);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    .card:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--red-gradient);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .card:hover:before {
+      opacity: 0.1;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+      border-color: var(--accent);
+    }
+
+    .card h3 {
+      font-family: 'Montserrat', sans-serif;
+      color: white;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+      font-size: 1.4rem;
+      border: none;
+      padding: 0;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: #f1faee;
+      position: relative;
+      z-index: 1;
+      line-height: 1.5;
+    }
+
+    .card .teacher {
+      display: block;
+      margin-top: 12px;
+      font-style: italic;
+      color: var(--accent-light);
+      font-weight: 500;
+    }
+
+    /* Seção da equipe */
+    .team-section {
+      background: rgba(10, 17, 40, 0.7);
+      padding: 70px 30px;
+      border-radius: 15px;
+      margin: 40px 0;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    .team-category {
+      margin-bottom: 50px;
+    }
+
+    .team-category h3 {
+      color: var(--accent);
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      text-align: center;
+      border: none;
+      padding: 0;
+      position: relative;
+    }
+
+    .team-category h3:after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--red-gradient);
+      margin: 15px auto;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .team-member {
+      background: rgba(42, 92, 141, 0.2);
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    .team-member:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+      border-color: var(--accent);
+    }
+
+    .team-member h4 {
+      color: white;
+      margin-bottom: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+    }
+
+    .team-member p {
+      color: #e5e5e5;
+      font-size: 1rem;
+    }
+
+    .support-team {
+      background: rgba(42, 92, 141, 0.2);
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    .support-team h4 {
+      color: white;
+      margin-bottom: 20px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .support-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .support-item {
+      background: var(--red-gradient);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .support-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    footer {
+      background: var(--tech-gradient);
+      color: #fff;
+      padding: 80px 20px 40px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+    }
+
+    footer:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 0;
+    }
+
+    footer h2 {
+      color: white;
+      margin-bottom: 40px;
+    }
+
+    footer h2:after {
+      background: var(--red-gradient);
+    }
+
+    footer h3 {
+      color: var(--accent-light);
+      margin: 30px 0 20px;
+      text-align: center;
+      border: none;
+      font-size: 1.4rem;
+    }
+
+    footer p, footer li {
+      font-size: 1rem;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .copyright {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+      color: #e5e5e5;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(10, 17, 40, 0.95);
+      padding: 18px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(230, 57, 70, 0.3);
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s;
+      position: relative;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+    }
+
+    nav a i {
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+
+    nav a:after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--accent);
+      transition: width 0.3s;
+      border-radius: 2px;
+    }
+
+    nav a:hover:after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: var(--accent-light);
+    }
+
+    .tech-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--red-gradient);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+
+    .floating-tech-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .floating-element {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: rgba(230, 57, 70, 0.1);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      border-radius: 8px;
+      animation: floatElement 15s infinite ease-in-out;
+    }
+
+    @keyframes floatElement {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(20px, 40px) rotate(5deg); }
+      50% { transform: translate(-10px, 70px) rotate(-5deg); }
+      75% { transform: translate(30px, 30px) rotate(3deg); }
+    }
+
+    .hexagon {
+      position: absolute;
+      width: 30px;
+      height: 17.32px;
+      background-color: rgba(26, 42, 108, 0.2);
+      margin: 8.66px 0;
+      border-left: 1px solid rgba(230, 57, 70, 0.3);
+      border-right: 1px solid rgba(230, 57, 70, 0.3);
+      animation: rotateHexagon 20s infinite linear;
+    }
+
+    .hexagon:before,
+    .hexagon:after {
+      content: "";
+      position: absolute;
+      width: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+    }
+
+    .hexagon:before {
+      bottom: 100%;
+      border-bottom: 8.66px solid rgba(26, 42, 108, 0.2);
+    }
+
+    .hexagon:after {
+      top: 100%;
+      border-top: 8.66px solid rgba(26, 42, 108, 0.2);
+    }
+
+    @keyframes rotateHexagon {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media(max-width: 768px){
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      section {
+        padding: 60px 15px;
+      }
+      h2 {
+        font-size: 2rem;
+      }
+      .cards {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 12px 15px;
+      }
+      nav a {
+        font-size: 0.95rem;
+      }
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+      .typing-text {
+        font-size: 1.5rem;
+      }
+      header {
+        padding: 80px 20px 60px;
+      }
+    }
+
+    @media(max-width: 480px){
+      .typing-text {
+        font-size: 1.2rem;
+      }
+      header h1 {
+        font-size: 1.7rem;
+      }
+      h2 {
+        font-size: 1.8rem;
+      }
+      h3 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Tela de introdução com logo -->
+  <div class="intro-screen" id="introScreen">
+    <img src="img/LOGO-REAÇÃO-PNG-CONTORNO-BRANCO.png" alt="Logo Colégio Reação" class="intro-logo">
+    <div class="typing-container">
+      <div id="typing-text" class="typing-text"></div>
+    </div>
+    <div class="particles" id="particles"></div>
+  </div>
+
+  <nav>
+    <a href="#intro"><i class="fas fa-home"></i> Início</a>
+    <a href="#cronograma"><i class="fas fa-project-diagram"></i> Projetos</a>
+    <a href="#equipe"><i class="fas fa-users"></i> Equipe</a>
+  </nav>
+
+  <header id="intro">
+    <div class="tech-pattern"></div>
+    <div class="circuit-lines" id="circuitLines"></div>
+    <div class="hexagon-pattern"></div>
+    <div class="content">
+      <span class="tech-badge">TECNOLOGIA & INOVAÇÃO</span>
+      <img src="img/LOGO-REAÇÃO-PNG-CONTORNO-BRANCO.png" alt="Logo Colégio Reação">
+      <h1>Bem-vindos à FECCOR/JECOR 2025 – Ciência em Movimento: Ideias que Mudam o Mundo</h1>
+      <p>Neste ano de 2025, o Colégio Reação realiza uma feira de conhecimento inspiradora, cujo tema é Ciência em Movimento: Ideias que mudam o mundo. A ciência está em constante transformação, convertendo ideias em descobertas e sonhos em realidade. Nossa Feira de Ciências convida você a conhecer projetos criativos, sustentáveis e inovadores, que mostram como o conhecimento pode inspirar mudanças e construir um futuro melhor para todos.</p>
+    </div>
+    <div class="floating-tech-elements" id="floatingElements"></div>
+  </header>
+
+  <section id="cronograma">
+    <h2>Projetos da Feira</h2>
+    
+    <h3>Educação Infantil</h3>
+    <div class="cards">
+      <div class="card">
+        <h3>Infantil III</h3>
+        <p>Pequenos cientistas desconhecidos: o mundo explorando, brincando e aprendendo<span class="teacher"> – Prof. Manoela</span></p>
+      </div>
+      <div class="card">
+        <h3>Infantil IV</h3>
+        <p>A evolução dos transportes<span class="teacher"> – Prof. Celiane</span></p>
+      </div>
+      <div class="card">
+        <h3>Infantil V</h3>
+        <p>Brincar também é ciência: o poder das ideias na infância<span class="teacher"> – Prof. Hanna</span></p>
+      </div>
+    </div>
+
+    <h3>Ensino Fundamental I</h3>
+    <div class="cards">
+      <div class="card"><h3>1º ano A/B</h3><p>Natureza e sustentabilidade: pequenas ações que mudam o mundo<span class="teacher"> – Prof. Ellen</span></p></div>
+      <div class="card"><h3>2º ano A/B</h3><p>Proteger habitats naturais e espécies ameaçadas<span class="teacher"> – Prof. Eva</span></p></div>
+      <div class="card"><h3>3º ano A/B</h3><p>Corpo humano and esporte<span class="teacher"> – Prof. Rozangela</span></p></div>
+      <div class="card"><h3>4º ano A/B</h3><p>Energias renováveis<span class="teacher"> – Prof. Valéria</span></p></div>
+      <div class="card"><h3>5º ano A</h3><p>Evolução da escrita ao longo dos tempos<span class="teacher"> – Prof. Andreia</span></p></div>
+      <div class="card"><h3>5º ano B</h3><p>Exploradores do corpo humano: uma viagem por dentro de você<span class="teacher"> – Prof. Eliane</span></p></div>
+    </div>
+
+    <h3>Ensino Fundamental II</h3>
+    <div class="cards">
+      <div class="card"><h3>6º A</h3><p>Inteligência Artificial: A Ciência do Pensar das Máquinas<span class="teacher"> – Prof. Priscila e Danyelle Lau</span></p></div>
+      <div class="card"><h3>6º B</h3><p>Energia Limpa em Movimento: Alternativas Sustentáveis para o Futuro<span class="teacher"> – Prof. Matheus e Anderson</span></p></div>
+      <div class="card"><h3>7º A</h3><p>Ciência Criativa: Pequenas Invenções, Grandes Ideias<span class="teacher"> – Prof. Marianne e Bruno</span></p></div>
+      <div class="card"><h3>7º B</h3><p>Biotecnologia e Saúde<span class="teacher"> – Prof. Bianca e Rafael</span></p></div>
+      <div class="card"><h3>8º A</h3><p>Purificação da água: como a água potável melhorou a saúde pública<span class="teacher"> – Prof. Nathália e Naiara</span></p></div>
+      <div class="card"><h3>8º B</h3><p>Ciência por trás dos alimentos<span class="teacher"> – Prof. Vinícius e Adriano</span></p></div>
+      <div class="card"><h3>9º A</h3><p>Inteligência Artificial<span class="teacher"> – Prof. Welber e Chayene</span></p></div>
+      <div class="card"><h3>9º B</h3><p>Jovens inventores: experiências inovadoras<span class="teacher"> – Prof. Danielle e Aline</span></p></div>
+    </div>
+
+    <h3>Ensino Médio</h3>
+    <div class="cards">
+      <div class="card"><h3>1ª A</h3><p>Inteligência Artificial no cotidiano<span class="teacher"> – Prof. Cleiton, Rafael e Chayene</span></p></div>
+      <div class="card"><h3>1ª B</h3><p>Inteligência Artificial na Mídia<span class="teacher"> – Prof. Bruno, Fábia e Laura</span></p></div>
+      <div class="card"><h3>2ª A</h3><p>Radiação – Inteligência Artificial<span class="teacher"> – Prof. Jackson, Leonardo e Fernando</span></p></div>
+      <div class="card"><h3>2ª B</h3><p>IA em sala de aula<span class="teacher"> – Prof. Dhiesney, Jaime e Anderson</span></p></div>
+      <div class="card"><h3>3ª A</h3><p>Estética e esporte<span class="teacher"> – Prof. Thiago e Juliana</span></p></div>
+      <div class="card"><h3>3ª B</h3><p>Inteligência Artificial na medicina<span class="teacher"> – Prof. Amanda, Bianca e Thales</span></p></div>
+    </div>
+    
+    <div class="floating-tech-elements" id="projectElements"></div>
+  </section>
+
+  <section id="equipe">
+    <h2>Equipe Organizadora</h2>
+    
+    <div class="team-section">
+      <div class="team-category">
+        <h3>Direção</h3>
+        <div class="team-grid">
+          <div class="team-member">
+            <h4>Miriã Ferreira Gomes</h4>
+            <p>Diretora Geral</p>
+          </div>
+          <div class="team-member">
+            <h4>Fabiana Cristina</h4>
+            <p>Diretora Pedagógica</p>
+          </div>
+          <div class="team-member">
+            <h4>Dayse Marianna</h4>
+            <p>Diretora Administrativa</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-category">
+        <h3>Coordenação</h3>
+        <div class="team-grid">
+          <div class="team-member">
+            <h4>Joelma Magalhães</h4>
+            <p>Educação Infantil e Anos Iniciais</p>
+          </div>
+          <div class="team-member">
+            <h4>Glaucia Rodrigues</h4>
+            <p>Anos Finais</p>
+          </div>
+          <div class="team-member">
+            <h4>Roseanne Alencar</h4>
+            <p>Ensino Médio</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-category">
+        <h3>Equipe de Apoio</h3>
+        <div class="support-team">
+          <div class="support-list">
+            <span class="support-item">Alex</span>
+            <span class="support-item">Danyelle</span>
+            <span class="support-item">Brenda</span>
+            <span class="support-item">Rute</span>
+            <span class="support-item">Eliane</span>
+            <span class="support-item">Josefa</span>
+            <span class="support-item">Rosângela</span>
+            <span class="support-item">Simone</span>
+            <span class="support-item">Gislede</span>
+            <span class="support-item">Denilson</span>
+            <span class="support-item">Ítalo</span>
+            <span class="support-item">Gabriela</span>
+            <span class="support-item">Monique</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="floating-tech-elements" id="teamElements"></div>
+  </section>
+
+  <footer>
+    <h2>FECCOR/JECOR 2025</h2>
+    <p>Colégio Reação - Ciência em Movimento: Ideias que Mudam o Mundo</p>
+    
+    <div class="copyright">
+      <p>© 2025 Colégio Reação - Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <script>
+    // Efeito de digitação
+    function typeEffect(element, text, speed, delay) {
+      setTimeout(() => {
+        let i = 0;
+        element.textContent = '';
+        
+        const timer = setInterval(() => {
+          if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+          } else {
+            clearInterval(timer);
+          }
+        }, speed);
+      }, delay);
+    }
+
+    // Criar linhas de circuito
+    function createCircuitLines() {
+      const container = document.getElementById('circuitLines');
+      for (let i = 0; i < 15; i++) {
+        const line = document.createElement('div');
+        line.classList.add('circuit-line');
+        line.style.top = `${Math.random() * 100}%`;
+        line.style.width = `${Math.random() * 30 + 20}%`;
+        line.style.left = `${Math.random() * 70}%`;
+        line.style.animationDelay = `${Math.random() * 5}s`;
+        container.appendChild(line);
+      }
+    }
+
+    // Criar elementos flutuantes
+    function createFloatingElements(containerId, count) {
+      const container = document.getElementById(containerId);
+      for (let i = 0; i < count; i++) {
+        if (Math.random() > 0.5) {
+          const element = document.createElement('div');
+          element.classList.add('floating-element');
+          element.style.left = `${Math.random() * 100}%`;
+          element.style.top = `${Math.random() * 100}%`;
+          element.style.animationDelay = `${Math.random() * 5}s`;
+          container.appendChild(element);
+        } else {
+          const hexagon = document.createElement('div');
+          hexagon.classList.add('hexagon');
+          hexagon.style.left = `${Math.random() * 100}%`;
+          hexagon.style.top = `${Math.random() * 100}%`;
+          hexagon.style.animationDelay = `${Math.random() * 5}s`;
+          container.appendChild(hexagon);
+        }
+      }
+    }
+
+    // Tela de introdução com a logo
+    document.addEventListener('DOMContentLoaded', function() {
+      const introScreen = document.getElementById('introScreen');
+      const particlesContainer = document.getElementById('particles');
+      const typingText = document.getElementById('typing-text');
+      
+      // Texto para o efeito de digitação
+      const textToType = "BEM VINDO(A) À FECCOR/JECOR 2025";
+      
+      // Iniciar efeito de digitação
+      typeEffect(typingText, textToType, 80, 500);
+      
+      // Criar partículas para efeito tecnológico
+      function createParticles() {
+        for (let i = 0; i < 50; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          
+          const size = Math.random() * 4 + 1;
+          const posX = Math.random() * 100;
+          const duration = Math.random() * 10 + 5;
+          
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${posX}%`;
+          particle.style.animationDuration = `${duration}s`;
+          particle.style.animationDelay = `${Math.random() * 5}s`;
+          
+          particlesContainer.appendChild(particle);
+        }
+      }
+      
+      createParticles();
+      
+      // Esconder a tela de introdução após 5 segundos
+      setTimeout(() => {
+        introScreen.classList.add('hidden');
+      }, 5000);
+      
+      // Criar elementos de circuito
+      createCircuitLines();
+      
+      // Criar elementos flutuantes para cada seção
+      createFloatingElements('floatingElements', 8);
+      createFloatingElements('projectElements', 6);
+      createFloatingElements('teamElements', 5);
+    });
+  </script>
+</body>
+</html>
