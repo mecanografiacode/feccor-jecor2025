@@ -7,6 +7,139 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* Todos os estilos anteriores permanecem aqui */
+    /* ... */
+    
+    /* Novos estilos para a galeria */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: all 0.4s ease;
+      height: 220px; /* Altura fixa para uniformidade */
+      position: relative;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    /* Responsividade para a galeria */
+    @media(max-width: 768px){
+      .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+      }
+      
+      .gallery-item {
+        height: 180px;
+      }
+    }
+    
+    @media(max-width: 480px){
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      
+      .gallery-item {
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Todo o conteúdo anterior permanece aqui -->
+  <!-- ... -->
+
+  <section id="galeria">
+    <h2>Galeria de Fotos</h2>
+    <div class="gallery">
+      <!-- Gerando as 9 imagens com o novo formato -->
+      <div class="gallery-item">
+        <img src="img/1.jpeg" alt="Projeto de Robótica">
+      </div>
+      <div class="gallery-item">
+        <img src="img/2.jpeg" alt="Projeto de Robótica">
+      </div>
+      <div class="gallery-item">
+        <img src="img/3.jpeg" alt="Projeto de Robótica">
+      </div>
+      <div class="gallery-item">
+        <img src="img/4.jpeg" alt="Projeto de Robótica">
+      </div>
+      <div class="gallery-item">
+        <img src="img/5.jpeg" alt="Projeto de Robótica">
+      </div>
+      <div class="gallery-item">
+        <img src="img/6.jpeg" alt="Projeto de Robótica">
+      </div>
+      <div class="gallery-item">
+        <img src="img/7.jpeg" alt="Projeto de Robótica">
+      </div>
+      <div class="gallery-item">
+        <img src="img/8.jpeg" alt="Projeto de Robótica">
+      </div>
+      <div class="gallery-item">
+        <img src="img/9.jpeg" alt="Projeto de Robótica">
+      </div>
+    </div>
+  </section>
+
+  <!-- Restante do conteúdo permanece aqui -->
+  <!-- ... -->
+
+</body>
+</html>
+Principais alterações:
+Removi as classes do Tailwind CSS que não estavam sendo utilizadas
+
+Criei um sistema de grid CSS puro para a galeria com grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+
+Defini altura fixa para os itens da galeria (220px) para uniformidade
+
+Utilizei object-fit: cover para que as imagens preencham o container mantendo a proporção
+
+Adicionei efeitos de hover consistentes com o resto do site
+
+Implementei responsividade para diferentes tamanhos de tela
+
+A galeria agora se integrará perfeitamente com o design existente do site, mantendo a estética tecnológica e moderna enquanto exibe as fotos de forma organizada e com tamanho adequado.
+
+quero que as imagens fique no mesmo estilo dos blocos de cada seguimento
+Galeria de Fotos Integrada ao Estilo do Site
+Vou reformular a galeria para que as imagens fiquem no mesmo estilo dos blocos de cada segmento, mantendo a identidade visual do site.
+
+html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FECCOR/JECOR 2025 - Colégio Reação</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
     :root {
       --primary: #0a1128;
       --secondary: #2a5c8d;
@@ -621,6 +754,107 @@
       100% { transform: rotate(360deg); }
     }
 
+    /* NOVOS ESTILOS PARA A GALERIA */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    
+    .gallery-item {
+      background: rgba(42, 92, 141, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: all 0.4s ease;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      height: 250px;
+    }
+    
+    .gallery-item:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--red-gradient);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    
+    .gallery-item:hover:before {
+      opacity: 0.1;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+      border-color: var(--accent);
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 17, 40, 0.85);
+      padding: 12px 15px;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+    
+    .gallery-item:hover .gallery-caption {
+      transform: translateY(0);
+    }
+    
+    /* Responsividade para a galeria */
+    @media(max-width: 768px){
+      .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+      }
+      
+      .gallery-item {
+        height: 200px;
+      }
+    }
+    
+    @media(max-width: 480px){
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+      
+      .gallery-item {
+        height: 160px;
+      }
+      
+      .gallery-caption {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+      }
+    }
+
     @media(max-width: 768px){
       header h1 {
         font-size: 2rem;
@@ -686,6 +920,7 @@
   <nav>
     <a href="#intro"><i class="fas fa-home"></i> Início</a>
     <a href="#cronograma"><i class="fas fa-project-diagram"></i> Projetos</a>
+    <a href="#galeria"><i class="fas fa-images"></i> Galeria</a>
     <a href="#equipe"><i class="fas fa-users"></i> Equipe</a>
   </nav>
 
@@ -696,10 +931,229 @@
     <div class="content">
       <img src="img/LOGO-REAÇÃO-PNG-CONTORNO-BRANCO.png" alt="Logo Colégio Reação">
       <h1>Bem-vindos à FECCOR/JECOR 2025 – Ciência em Movimento: Ideias que Mudam o Mundo</h1>
-      <p>Neste ano de 2025, o Colégio Reação realiza uma feira de conhecimento inspiradora, cujo tema é Ciência em Movimento: Ideias que mudam o mundo. A ciência está em constante transformação, convertendo ideias em descobertas e sonhos em realidade. Nossa Feira de Ciências convida você a conhecer projetos criativos, sustentáveis e inovadores, que mostram como o conhecimento pode inspirar mudanças e construir um futuro melhor para todos.</p>
+      <p>Neste ano de 2025, o Colégio Reação realiza uma feira de conhecimento inspiradora, cujo tema é Ciência em Movimento: Ideias que mudam o mundo. A ciência está em constante transformação, convertendo ideias em descobertas e sonhos em realidade. Nossa Feira de Ciências convida você a conhecer projetos creativos, sustentáveis e inovadores, que mostram como o conhecimento pode inspirar mudanças e construir um futuro melhor para todos.</p>
     </div>
     <div class="floating-tech-elements" id="floatingElements"></div>
   </header>
+
+  <section id="galeria">
+    <h2>Galeria de Fotos</h2>
+    <div class="gallery">
+      <!-- Gerando as 9 imagens com o novo formato -->
+      <div class="gallery-item">
+        <img src="img/1.jpeg" alt="Projeto de Robótica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/2.jpeg" alt="Projeto de Ciências">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/5.jpeg" alt="Experiência Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/10.jpeg" alt="Apresentação Estudantil">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/12.jpeg" alt="Projeto Sustentável">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/16.jpeg" alt="Feira de Conhecimento">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/22.jpeg" alt="Inovação Tecnológica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/24.jpeg" alt="Trabalho em Equipe">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/26.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/28.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/30.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/32.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/34.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/36.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/38.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/40.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/42.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/44.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/46.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/48.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/50.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/52.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/54.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/56.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/58.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/60.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/62.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/64.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/68.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/70.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/72.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/74.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/76.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/78.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/80.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/82.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/84.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/86.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/88.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/90.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/92.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/94.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/96.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/98.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/102.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/104.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/106.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/108.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/110.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/112.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/114.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/116.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/118.jpeg" alt="Demonstração Científica">
+        <div class="gallery-caption"></div>
+      </div>
+    </div>
+  </section>
 
   <section id="cronograma">
     <h2>Projetos da Feira</h2>
@@ -933,6 +1387,7 @@
   </script>
 </body>
 </html>
+
 
 
 
